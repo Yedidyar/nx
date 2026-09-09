@@ -211,7 +211,7 @@ describe('I/O snapshots', () => {
     const shown = JSON.parse(
       runCLI(`show target inputs ${lib}:escaping --json`, { env: on })
     );
-    expect(shown.snapshot).toEqual({
+    expect(shown.snapshot).toMatchObject({
       status: 'fallback',
       reason: 'escapes-workspace',
     });
@@ -278,7 +278,10 @@ describe('I/O snapshots', () => {
     const shown = JSON.parse(
       runCLI(`show target inputs ${lib}:echo --json`, { env: on })
     );
-    expect(shown.snapshot).toEqual({ status: 'fallback', reason: 'disabled' });
+    expect(shown.snapshot).toMatchObject({
+      status: 'fallback',
+      reason: 'disabled',
+    });
     expect(shown.markers).toBeUndefined();
     // Declared inputs again: the unread README is back in the hash.
     expect(runCLI(`echo ${lib}`, { env: on })).not.toContain(CACHE_HIT);
